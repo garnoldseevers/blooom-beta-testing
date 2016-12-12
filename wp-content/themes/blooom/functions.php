@@ -15,8 +15,21 @@ function theme_enqueue_styles() {
 // Your code goes below
 //
 
-function blooom_d_codes(){
-	
+function blooom_dcodes(){
+	// declare wordpress database as global variable
+	global $wpdb;
+	// bind the current post's ID to a variable
+	$current_post_id = get_the_ID();
+	// query database for dcode custom field value and bind result to variable using wpdb->prepare in order to prevent sql injection
+	$database_query = $wpdb->get_row($wpdb->prepare(
+		"
+		SELECT * 
+		FROM $wpdb->postmeta 
+		WHERE post_id = $current_post_id 
+			AND meta_key = 'dcode'
+		",
+		""
+	));
 }
 
 function adjust_blooom_theme(){
@@ -48,7 +61,8 @@ function adjust_blooom_theme(){
 		<?php
 	}
 }
-// run adjust_blooom_theme() when WordPress runs wp_head()
+// run functions when WordPress runs wp_head()
 add_action( 'wp_head', 'adjust_blooom_theme');
+add_action( 'wp_head', 'blooom_dcodes');
 
 ?>
