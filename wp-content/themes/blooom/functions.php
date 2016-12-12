@@ -14,6 +14,11 @@ function theme_enqueue_styles() {
 //
 // Your code goes below
 //
+
+function blooom_d_codes(){
+	
+}
+
 function adjust_blooom_theme(){
 	// declare wordpress database as global variable
 	global $wpdb;
